@@ -1,3 +1,6 @@
+"""
+    :Authors : MORTELIER Alexis < 21605783@etu.unicaen.fr>
+"""
 #partie A
 def ajout(l,motATrouver,motEnCours):
     newch=""

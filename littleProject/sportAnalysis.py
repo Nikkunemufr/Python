@@ -1,3 +1,6 @@
+"""
+    :Authors : MORTELIER Alexis < 21605783@etu.unicaen.fr>
+"""
 fich=["J1.txt","J2.txt","J3.txt"]
 ligue1= ['Bordeaux', 'Marseille', 'Lille', 'Lyon', 'Lorient', 'Nantes', 'Auxerre', 'Monaco','Valenciennes', 'Montpellier', 'Toulouse', 'Sochaux', 'Boulogne', 'Nancy', 'Paris', 'Nice']
 

@@ -1,5 +1,5 @@
 """
-    authors:MORTELIER Alexis
+    :Authors : MORTELIER Alexis < 21605783@etu.unicaen.fr>
 """
 #=================================== Variable global ===================================
 jean={"nom":"jean","jeu1":120, "jeu3":75, "jeu4":50,"jeu5":240} 

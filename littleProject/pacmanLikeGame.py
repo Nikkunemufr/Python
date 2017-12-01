@@ -1,3 +1,6 @@
+"""
+    :Authors : MORTELIER Alexis < 21605783@etu.unicaen.fr>
+"""
 from tkinter import *
 from random import *
 # variables globales 

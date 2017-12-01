@@ -1,3 +1,6 @@
+"""
+    :Authors : MORTELIER Alexis < 21605783@etu.unicaen.fr>
+"""
 from turtle import *
 #0.Menu
 print("triang1(n)")

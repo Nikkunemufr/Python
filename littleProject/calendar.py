@@ -1,3 +1,6 @@
+"""
+    :Authors : MORTELIER Alexis < 21605783@etu.unicaen.fr>
+"""
 mois=int(input("Saisissez le mois : "))
 annee=int(input("Saisissez l'année : "))
 #Verifie si il s'agit d'une annee bisextile
