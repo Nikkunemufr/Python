@@ -144,13 +144,13 @@ def placerPions(grille):
     grille[0][x][2]="1"
     grille[1][x][2]="1"
     grille[n-2][x][2]="2"
-    grille[n-1][x][2]="2"                  
+    grille[n-1][x][2]="2"
   return grille
 
 
-  
+
 #####################################Deplacements#####################################
-  
+
 def depFantassins(grille,x,y):
   """
       Cette fonction renvoie le tuple de deplacement possible pour un fantassin par rapport à sa position dans la grille en respectant les régles du latroncules
@@ -158,12 +158,12 @@ def depFantassins(grille,x,y):
       :type grille: liste
       :param x: ligne du pion
       :type x: entier
-      :param y: colonne du pion de départ 
+      :param y: colonne du pion de départ
       :type y: entier
   """
   res=()
   joueur=grille[x][y][2]
-  
+
   bas=[x-1,y]
   haut=[x+1,y]
   if joueur=="1" and haut[0]>=0 and haut[1]>=0 and haut[0]<=len(grille)-1 and haut[1]<=len(grille)-1 and grille[haut[0]][haut[1]][1:]==[" "," "] and not caseCapturable(grille,haut[0],haut[1],joueur) :#Retourne la coordonné possible pour avancer un fantassin du joueur 1:
@@ -173,20 +173,20 @@ def depFantassins(grille,x,y):
   else:
     return ()
   return res
-  
+
 def depCavaliers(grille,x,y):
   """
       Cette fonction renvoie le tuple de deplacement possible pour un cavalier par rapport à sa position dans la grille en respectant les régles du latroncules
       :param grille: grille de jeu
       :type grille: liste
-      :param x: ligne du pion de départ 
+      :param x: ligne du pion de départ
       :type x: entier
-      :param y: colonne du pion de départ 
+      :param y: colonne du pion de départ
       :type y: entier
   """
   res=()
   joueur=grille[x][y][2]
-  
+
   gauche=[x,y-1]
   droite=[x,y+1]
   bas=[x-1,y]
@@ -204,7 +204,7 @@ def depCavaliers(grille,x,y):
   hautGaucheSaut=[x+2,y-2]
   basGaucheSaut=[x-2,y-2]
   hautDroiteSaut=[x+2,y+2]
-  
+
   if grille[x][y][0]=="B":#Si le cavalier est sur une case blanche :
     #Si la coordonée gauche est dans la grille et que la case d'arrivée est libre et que le pion n'entre pas en position de capture alors:
     if gauche[0]>=0 and gauche[1]>=0 and gauche[0]<=len(grille)-1 and gauche[1]<=len(grille)-1 and grille[gauche[0]][gauche[1]][2]==" " and not caseCapturable(grille,gauche[0],gauche[1],joueur):
@@ -441,7 +441,7 @@ def depCavaliers(grille,x,y):
     else:
       return ()
   return res#Retourne le tuple contenant toutes les coordonnées possibles
-  
+
 def deplacement(grille,x,y):
   """
       Cette fonction appelle la fonction depFantassins ou depCavaliers en fonction de la nature du pion à bouger
@@ -543,7 +543,7 @@ def pionCapturer(grille):#Si le pion est capturer efface le pion de la grille
     for y in range(len(grille)):
       if caseCapturee(grille,x,y):
         grille[x][y][1:]=[" "," "]
-        
+
 #####################################Partie#####################################
 def tourJoueur(grille,x,y):
   """
@@ -588,7 +588,7 @@ def cavJ2(grille):
       if grille[x][y][1:]==["C","2"]:
         res+=1
   return res
-  
+
 def upgradeJ1(grille):
   """
       Cette fonction retourne un tuple de coordonnées de tout les fantassins pouvant être transformer en cavaliers pour le joueur 1
@@ -622,14 +622,14 @@ def upgrade(grille):
       :param grille: grille de jeu
       :type grille: liste
   """
-  global tour     
+  global tour
   if tour%2==0 and upgradeJ1(grille)!=() and cavJ1(grille)<8:
     return upgradeJ1(grille)
   elif tour%2!=0 and upgradeJ2(grille)!=() and cavJ2(grille)<8:
     return upgradeJ2(grille)
   else:
     return False
-  
+
 def coupPossible1(grille):#Calcul le nombre de coups possible pour le joueur 1
   """
       Cette fonction indique combien il y a de coups possible pour le joueur 1
@@ -748,13 +748,13 @@ def depIA():
   coupValide(grille,i[alea],j[alea],res[alea2][0],res[alea2][1])
 
 #####################################Affichage#####################################
-          
+
 def afficheGrille(grille):
   for l in grille:#pour chaque ligne dans la grille
     for x in l:#pour chaque valeur dans la ligne
       print("{:^20}".format(str(x)),end="")#affiche x avec espace mais pas retour a la ligne
     print ()#retour a la ligne
-  
+
 def choixUpgrade(event):
   """
       Cette fonction effectue l'évolution du fantassin en cavalier par rapport au coordonnées donnée
@@ -771,7 +771,7 @@ def choixUpgrade(event):
 
 def affDep(event):
   """
-      Cette fonction gére l'affichage qui découle du déplacement demander 
+      Cette fonction gére l'affichage qui découle du déplacement demander
       :param event: coordoonnés du clic souris
       :type event: coordoonnés
   """
@@ -801,7 +801,7 @@ def affDep(event):
     intervalleChrono=2
     gameMode=0
     can.unbind("<Button-1>")
-  
+
 def prevDep(event):
   """
       Cette fonction gére l'affichage de la prévisualisation des coups possible en fonction du pion cliqué
@@ -827,7 +827,7 @@ def prevDep(event):
       can.bind("<Button-1>", affDep)
       for i in range(len(dep)):
         can.create_rectangle(t*dep[i][1],dep[i][0]*t,t*(dep[i][1]+1),(dep[i][0]+1)*t, outline=previ, width=8)#Prévisualisation des coups possibles
-      
+
 def affPion():
   """
       Cette fonction dessine les pions sur l'interface graphique
@@ -846,6 +846,7 @@ def affPion():
         can.create_image(t*((y+1/2)),t*((x+1/2)),image=cavalierB)
       elif grille[x][y][1:]==["C","2"]:
         can.create_image(t*((y+1/2)),t*((x+1/2)),image=cavalierN)
+  can.update()
 
 def affGrille():
   """
@@ -872,7 +873,7 @@ def affGrille():
             can.create_line(t*x, t*y,t*(x+1),(y+1)*t, fill="black",width=4)
           elif x==1 or x== 3 or x==4 or x==6:#2eme 4eme 5eme et 7eme colonne
             can.create_line(t*(x+1), t*y,t*x,(y+1)*t, fill="black",width=4)
-        
+
 def affSave():
   """
       Cette fonction affiche une fenetre qui permet de gérer une sauvegarde
@@ -934,7 +935,7 @@ def affJvIA():
   affGrille()
   affPion()
   can.bind("<Button-1>", prevDep)
-  
+
 def affIAvIA():
   """
       Cette fonction permet de lancer une partie en IA contre IA
@@ -951,11 +952,12 @@ def affIAvIA():
   tour=0
   while victoire(grille)==False:
     depIA()
-  affGrille()
-  affPion()
+    affPion()
+    affGrille()
+  
+  
 
-  
-  
+
 def affSurrend():
   """
       Cette fonction permet d'arrêter la partie sur une égalité
@@ -966,7 +968,7 @@ def affSurrend():
   gameMode=0
   info.set("Egalité sur un accord commun")
   can.unbind("<Button-1>")
-  
+
 def affLight():
   """
       Cette fonction permet d'afficher le thême light
@@ -1048,7 +1050,7 @@ def affRules():
   t.insert(INSERT,"Un pion (cavalier ou fantassin) est capturé lorsqu’il se trouve entre deux pions adverses (deux cavaliers, deux fantassins ou un cavalier et un fantassin). Un pion capturé est retiré du jeu.Dans un angle, le pion est capturé en occupant les deux cases latérales.\n")
   t.config(state=DISABLED)
   fen.mainloop()
-    
+
 def aff_Chrono() :
   """
       Cette fonction permet d'afficher le chrono et de l'actualiser
@@ -1081,7 +1083,7 @@ def chrono() :
     intervalleChrono=1
     dateheure=localtime()
     t0=(dateheure[3]*3600)+(dateheure[4]*60)+dateheure[5]
-        
+
 plateau=Tk()
 plateau.title("Latroncules")
 tour=0
@@ -1137,5 +1139,5 @@ menubar.add_cascade(label="Themes", menu=menu2)
 menubar.add_command(label="Regle du jeu", command=affRules)
 
 plateau.config(menu=menubar)
-    
+
 plateau.mainloop()
