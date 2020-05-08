@@ -1,0 +1,82 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+
+library(tidyverse)
+library(GGally)
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+````{r}
+CSVFILE = "./extracted.ft.csv"
+data <- read.csv(CSVFILE)
+data %>% 
+  mutate(frame=1:nrow(data)) %>%
+  select(frame, X..zcr_mean,zcr_std,energy_entropy_mean,energy_entropy_std,energy_std,energy_std,spectral_centroid_mean,spectral_centroid_std,spectral_spread_mean,spectral_spread_std,spectral_entropy_mean,spectral_entropy_std,spectral_flux_mean,spectral_flux_std,spectral_rolloff_mean,spectral_rolloff_std) %>%
+  gather(key="key", value="value",-frame) %>%
+  ggplot(aes(x=frame, y=value))+
+    geom_line()+
+    facet_grid(key~.,scales="free")
+
+# reducing variables
+library(FactoMineR)
+data.pca <- PCA(data)
+res.hcpc <- HCPC(data.pca,nb.clust=-1)
+res.hcpc$desc.axes
+res.hcpc$desc.ind
+
+frameToSec = function (frame, duration, totalFrame){
+  # duration : s in the audio
+  # totalFrame : nrow
+  # frame: current row
+  return(frame/totalFrame*duration)
+}
+
+AUDIODURATION = 935
+simPlot = res.hcpc$data.clust %>%
+  mutate(frame=sapply(1:nrow(res.hcpc$data.clust), function(f){return(frameToSec(f,AUDIODURATION,nrow(res.hcpc$data.clust)))}))%>%
+  ggplot(aes(xmin=frame, xmax=frame+1, ymin=0, ymax=0.1, fill=clust))+
+    geom_rect()+
+  xlab("Time (s)")+
+  ggtitle("Audio similarity clusters")
+
+```
+
+
+
+```{r}
+library(seewave)
+library(tuneR)
+AUDIOFILE = "./extracted.wav"
+audio <- readWave(AUDIOFILE)
+
+plot(audio)
+audioPeriodogram = periodogram(mono(audio, which="both"))
+plot(audioPeriodogram)
+
+
+timestampToFrame = function(m=0, s=0){
+  return(m*60+s)
+}
+
+pointsImportantsStart<- c(
+  timestampToFrame(2,0),
+  timestampToFrame(2,4),
+  timestampToFrame(2,10),
+  timestampToFrame(2,10),
+  
+)
+
+```
